@@ -165,7 +165,6 @@ function Get-TargetResource
             }
             $complexSettings += New-CimInstance -ClassName MSFT_MicrosoftGraphDeviceManagementConfigurationSetting -Namespace root/Microsoft/Windows/DesiredStateConfiguration -Property @{
                 'SettingInstance' = New-CimInstance -ClassName MSFT_MicrosoftGraphDeviceManagementConfigurationSettingInstance -Namespace root/Microsoft/Windows/DesiredStateConfiguration -Property $complexSettingInstance -ClientOnly
-                'Id' = $currentSettings.Id
             } -ClientOnly
         }
 
@@ -762,7 +761,7 @@ function Export-TargetResource
 function Get-SettingValue
 {
     [CmdletBinding()]
-    [OutputType([System.Collections.Hashtable], [System.Collections.Hashtable[]])]
+    [OutputType([CimInstance[]],[System.Collections.Hashtable], [System.Collections.Hashtable[]])]
     param (
         [Parameter()]
         $SettingValue,
