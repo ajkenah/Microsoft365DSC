@@ -157,12 +157,7 @@ function Get-TargetResource
             $valueName = $currentSettings.settingInstance.AdditionalProperties.keys | Where-Object { @('ChoiceSettingCollectionValue','ChoiceSettingValue','GroupSettingCollectionValue','GroupSettingValue','SimpleSettingCollectionValue','SimpleSettingValue') -contains $_ }
             $rawValue = $currentSettings.settingInstance.AdditionalProperties.$valueName
             $complexValue = Get-SettingValue -SettingValue $rawValue -SettingValueType $currentSettings.settingInstance.AdditionalProperties.'@odata.type'
-            If ( ('ChoiceSettingCollectionValue','GroupSettingCollectionValue','SimpleSettingCollectionValue') -contains $valueName ) {
-                $complexSettingInstance[$valueName] = [CimInstance[]]$complexValue
-            }
-            Else {
-                $complexSettingInstance[$valueName] = $complexValue
-            }
+            $complexSettingInstance[$valueName] = $complexValue
             $complexSettings += New-CimInstance -ClassName MSFT_MicrosoftGraphDeviceManagementConfigurationSetting -Namespace root/Microsoft/Windows/DesiredStateConfiguration -Property @{
                 'SettingInstance' = New-CimInstance -ClassName MSFT_MicrosoftGraphDeviceManagementConfigurationSettingInstance -Namespace root/Microsoft/Windows/DesiredStateConfiguration -Property $complexSettingInstance -ClientOnly
             } -ClientOnly
